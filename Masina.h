@@ -6,6 +6,7 @@ using namespace std;
 
 class Masina{
 private:
+    string nRInmatriculare;
     string marca;
     string model;
     string culoare;
@@ -16,7 +17,7 @@ private:
     int CaiPutere;
 
 public:
-    Masina(string marca, string model, int anFabricatie, string culoare, bool reparata, int probleme[])
+    Masina(string marca, string model, int anFabricatie, string culoare,string nrInmatriculare, bool reparata, int probleme[])
     {
         this->marca = marca;
         this->model = model;
@@ -26,6 +27,7 @@ public:
         for(int i = 0; i <= 5; i++)
             this->probleme[i] = probleme[i];
         this->CalculManopera();
+        this->nRInmatriculare = nrInmatriculare;
     }
 
     Masina()
@@ -49,6 +51,7 @@ public:
         this->manopera = aux.manopera;
         this->anFabricatie = aux.anFabricatie;
         this->CaiPutere = aux.CaiPutere;
+        this->nRInmatriculare = aux.nRInmatriculare;
     }
 
     friend istream& operator>>(istream& in, Masina& m)
@@ -60,6 +63,8 @@ public:
         in>>m.marca;
         cout<<"Introduceti modelul masinii"<<endl;
         in>>m.model;
+        cout<<"Introduceti numarul de inmatriculare al masinii: "<<endl;
+        in>>m.nRInmatriculare;
         cout<<"Introduceti culoarea masinii"<<endl;
         in>>m.culoare;
         cout<<"Introduceti anul fabriecatiei masinii"<<endl;
@@ -86,7 +91,7 @@ public:
     {
         if (m.reparata == false)
         {
-            cout<<endl<<"Pentru masina "<<m.marca<<" "<<m.model<<" de culoare "<<m.culoare<<", din anul "<<m.anFabricatie<<" cu "<<m.CaiPutere<<" CP, se ofera urmatoarele servicii:"<<endl;
+            cout<<endl<<"Pentru masina "<<m.marca<<" "<<m.model<<" cu numarul de inmatriculare "<<m.nRInmatriculare<<" de culoare "<<m.culoare<<", din anul "<<m.anFabricatie<<" cu "<<m.CaiPutere<<" CP, se ofera urmatoarele servicii:"<<endl;
             if (m.probleme[0] == 1)
                 cout<<"Reparatie frane"<<endl;
             if (m.probleme[1] == 1)
@@ -103,7 +108,7 @@ public:
         }
         else
         {
-            cout<<endl<<"Masina "<<m.marca<<" "<<m.model<<" de culoare "<<m.culoare<<", din anul "<<m.anFabricatie<<" cu "<<m.CaiPutere<<" CP, a fost reparata cu succes, iar costul total fiind de: "<<m.manopera<<" lei";
+            cout<<endl<<"Masina "<<m.marca<<" "<<m.model<<" cu numarul de inmatriculare "<<m.nRInmatriculare<<" de culoare "<<m.culoare<<", din anul "<<m.anFabricatie<<" cu "<<m.CaiPutere<<" CP, a fost reparata cu succes, iar costul total fiind de: "<<m.manopera<<" lei";
         }
         return out;
     }
@@ -119,6 +124,7 @@ public:
         manopera = aux.manopera;
         anFabricatie = aux.anFabricatie;
         CaiPutere = aux.CaiPutere;
+        nRInmatriculare = aux.nRInmatriculare;
         return *this;
     }
 
@@ -182,6 +188,13 @@ public:
     void setCaiPutere(int caiPutere) {
         CaiPutere = caiPutere;
     }
+    const string &getNrInmatriculare() const {
+        return nRInmatriculare;
+    }
+
+    void setNrInmatriculare(const string &nRInmatriculare) {
+        Masina::nRInmatriculare = nRInmatriculare;
+    }
 
 #pragma endregion
 
@@ -205,7 +218,7 @@ public:
 
     void SoftArabesc()
     {
-        cout<<endl<<"Cati caluti ii bagam verik?"<<endl;
+        cout<<endl<<"Cati caluti ii bagam veriku?"<<endl;
         int bonus;
         cin>>bonus;
         this->CaiPutere += bonus;
