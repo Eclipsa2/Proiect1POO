@@ -165,6 +165,12 @@ public:
         return probleme;
     }
 
+    void setProbleme(int V[])
+    {
+        for (int i = 0; i<=5; i++)
+            Masina::probleme[i] = V[i];
+    }
+
     int getManopera() const {
         return manopera;
     }

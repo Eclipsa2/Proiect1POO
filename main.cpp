@@ -1,9 +1,126 @@
 #include <iostream>
 #include <stdlib.h>
 #include "Masina.h"
+#include "Angajat.h"
 #include <fstream>
 
 using namespace std;
+
+Masina* citireFisierMasiniReparate(int& nrMasiniService)
+{
+    string aux;
+    bool reparata;
+    int auxInt, auxVector[5];
+    ifstream f("C:\\Users\\Andrei\\CLionProjects\\Proiect1POO\\MasiniReparateVeriku");
+    f>>nrMasiniService;
+    Masina* MasiniService = new Masina[nrMasiniService];
+    int contor = 0;
+    while (contor < nrMasiniService)
+    {
+        f>>aux;
+        MasiniService[contor].setMarca(aux);
+        f>>aux;
+        MasiniService[contor].setModel(aux);
+        f>>aux;
+        MasiniService[contor].setNrInmatriculare(aux);
+        f>>aux;
+        MasiniService[contor].setCuloare(aux);
+        f>>reparata;
+        MasiniService[contor].setReparata(reparata);
+        for (int i = 0; i<=5; i++)
+        {
+            f>>auxVector[i];
+        }
+        MasiniService[contor].setProbleme(auxVector);
+        f>>auxInt;
+        MasiniService[contor].setManopera(auxInt);
+        f>>auxInt;
+        MasiniService[contor].setAnFabricatie(auxInt);
+        f>>auxInt;
+        MasiniService[contor].setCaiPutere(auxInt);
+        contor ++;
+    }
+    return MasiniService;
+    f.close();
+}
+
+Masina* citireFisierMasiniService(int& nrMasiniService)
+{
+    string aux;
+    bool reparata;
+    int auxInt, auxVector[5];
+    ifstream f("C:\\Users\\Andrei\\CLionProjects\\Proiect1POO\\MasiniServiceVeriku");
+    f>>nrMasiniService;
+    Masina* MasiniService = new Masina[nrMasiniService];
+    int contor = 0;
+    while (contor < nrMasiniService)
+    {
+        f>>aux;
+        MasiniService[contor].setMarca(aux);
+        f>>aux;
+        MasiniService[contor].setModel(aux);
+        f>>aux;
+        MasiniService[contor].setNrInmatriculare(aux);
+        f>>aux;
+        MasiniService[contor].setCuloare(aux);
+        f>>reparata;
+        MasiniService[contor].setReparata(reparata);
+        for (int i = 0; i<=5; i++)
+        {
+            f>>auxVector[i];
+        }
+        MasiniService[contor].setProbleme(auxVector);
+        f>>auxInt;
+        MasiniService[contor].setManopera(auxInt);
+        f>>auxInt;
+        MasiniService[contor].setAnFabricatie(auxInt);
+        f>>auxInt;
+        MasiniService[contor].setCaiPutere(auxInt);
+        contor ++;
+    }
+    f.close();
+    return MasiniService;
+}
+
+void scriereFisierMasiniReparate(Masina* MasiniReparate, int nrMasiniReparate)
+{
+   ofstream g("C:\\Users\\Andrei\\CLionProjects\\Proiect1POO\\MasiniReparateVeriku") ;
+   g<<nrMasiniReparate;
+   for (int i = 0; i < nrMasiniReparate; i++)
+   {
+       g<<MasiniReparate[i].getMarca()<<" ";
+       g<<MasiniReparate[i].getModel()<<" ";
+       g<<MasiniReparate[i].getNrInmatriculare()<<" ";
+       g<<MasiniReparate[i].getCuloare()<<" ";
+       g<<MasiniReparate[i].isReparata()<<" ";
+       g<<MasiniReparate[i].getProbleme()<<" ";
+       g<<MasiniReparate[i].getManopera()<<" ";
+       g<<MasiniReparate[i].getAnFabricatie()<<" ";
+       g<<MasiniReparate[i].getCaiPutere()<<" ";
+       g<<endl;
+   }
+   g.close();
+}
+
+void scriereFisierMasiniService(Masina* MasiniReparate, int nrMasiniReparate)
+{
+    ofstream g("C:\\Users\\Andrei\\CLionProjects\\Proiect1POO\\MasiniServiceVeriku") ;
+    g<<nrMasiniReparate;
+    for (int i = 0; i < nrMasiniReparate; i++)
+    {
+        g<<MasiniReparate[i].getMarca()<<" ";
+        g<<MasiniReparate[i].getModel()<<" ";
+        g<<MasiniReparate[i].getNrInmatriculare()<<" ";
+        g<<MasiniReparate[i].getCuloare()<<" ";
+        g<<MasiniReparate[i].isReparata()<<" ";
+        g<<MasiniReparate[i].getProbleme()<<" ";
+        g<<MasiniReparate[i].getManopera()<<" ";
+        g<<MasiniReparate[i].getAnFabricatie()<<" ";
+        g<<MasiniReparate[i].getCaiPutere()<<" ";
+        g<<endl;
+    }
+    g.close();
+}
 
 int menu()
 {
@@ -13,8 +130,7 @@ int menu()
     cout<<"2. Vizualizati masinile aflate momentan in service"<<endl;
     cout<<"3. Vizualizati masinile reparate de service-ul nostru"<<endl;
     cout<<"4. Schimbare status masini"<<endl;
-    cout<<"5. Modificare servicii ale unei masini"<<endl;
-    cout<<"6. Soft arabesc"<<endl;
+    cout<<"5. Soft arabesc"<<endl;
     cout<<"0. Exit"<<endl;
     int optiune;
     cin>>optiune;
@@ -104,10 +220,6 @@ int main() {
             }
             case 5:
             {
-                break;
-            }
-            case 6:
-            {
                 cout<<endl<<"Ati ales specialitatea casei"<<endl;
                 string nrInmatriculare;
                 int ok = 0;
@@ -132,5 +244,9 @@ int main() {
         }
     }
     cout<<endl<<"O zi buna!";
+    //int nrMasini;
+    //Masina* serviceMasini;
+    //serviceMasini = citireFisierMasiniReparate(nrMasini);
+    //cout<<serviceMasini[0];
     return 0;
 }
