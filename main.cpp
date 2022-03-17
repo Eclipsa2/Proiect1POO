@@ -271,8 +271,8 @@ int main() {
             case 3:
             {
                 cout<<"Urmatoarele masini au fost reparate de Veriku: "<<endl;
-                for (int i = 0; i < nrMasiniService; i++)
-                    if(masiniReparate[i].isReparata() == true)
+                for (int i = 0; i < nrMasiniReparate; i++)
+                    if(masiniReparate[i].isReparata() == 1)
                         cout<<masiniReparate[i];
                 cout<<endl<<"1. Exit submeniu"<<endl<<"0. Exit aplicatie"<<endl;
                 cin>>optiune;
@@ -357,7 +357,7 @@ int main() {
                 angajati = new Angajat[nrAngajati];
                 for (int i = 0; i < nrAngajati - 1; i++)
                     angajati[i] = angajatAux[i];
-                cin>>angajati[nrAngajati - 1];
+                angajati[nrAngajati] = angajatNou;
                 cout<<endl<<"Angajatul a fost adaugat cu succes!";
                 cout<<endl<<"1. Adaugati un angajat nou"<<endl<<"2. Exit submeniu"<<endl<<"0. Exit aplicatie"<<endl;
                 cin>>optiune;
