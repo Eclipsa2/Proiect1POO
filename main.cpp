@@ -40,8 +40,8 @@ Masina* citireFisierMasiniReparate(int& nrMasiniService)
         MasiniService[contor].setCaiPutere(auxInt);
         contor++;
     }
-    return MasiniService;
     f.close();
+    return MasiniService;
 }
 
 Masina* citireFisierMasiniService(int& nrMasiniService)
@@ -243,6 +243,7 @@ int main() {
                 for (int i = 0; i < nrMasiniService; i++)
                     aux[i] = masiniService[i];
                 nrMasiniService++;
+                delete[] masiniService;
                 masiniService = new Masina[nrMasiniService];
                 for (int i = 0; i < nrMasiniService - 1; i++)
                     masiniService[i] = aux[i];
@@ -354,10 +355,11 @@ int main() {
                 for (int i = 0; i < nrAngajati; i++)
                     angajatAux[i] = angajati[i];
                 nrAngajati++;
+                delete[] angajati;
                 angajati = new Angajat[nrAngajati];
                 for (int i = 0; i < nrAngajati - 1; i++)
                     angajati[i] = angajatAux[i];
-                angajati[nrAngajati] = angajatNou;
+                angajati[nrAngajati - 1] = angajatNou;
                 cout<<endl<<"Angajatul a fost adaugat cu succes!";
                 cout<<endl<<"1. Adaugati un angajat nou"<<endl<<"2. Exit submeniu"<<endl<<"0. Exit aplicatie"<<endl;
                 cin>>optiune;
@@ -420,7 +422,7 @@ int main() {
     scriereFisierMasiniService(masiniService, nrMasiniService);
     scriereFisierMasiniReparate(masiniReparate, nrMasiniReparate);
     scriereFisierAngajati(angajati, nrAngajati);
-    cout<<endl<<"O zi buna!";
+    cout<<endl<<"O zi buna!"<<endl;
     //int nrMasini;
     //Masina* serviceMasini;
     //serviceMasini = citireFisierMasiniReparate(nrMasini);
