@@ -14,7 +14,7 @@ private:
     string model;
     string culoare;
     bool reparata;
-    int probleme[5];
+    int probleme[6];
     int manopera;
     int anFabricatie;
     int CaiPutere;
