@@ -82,6 +82,55 @@ Masina* citireFisierMasiniService(int& nrMasiniService)
     return MasiniService;
 }
 
+Angajat* citireFisierAngajati(int& nrAngajati)
+{
+    string aux;
+    Masina* MasinaAux;
+    bool auxBool;
+    int auxInt, auxVector[5], nrMasini;
+    ifstream f("C:\\Users\\Andrei\\CLionProjects\\Proiect1POO\\Angajati");
+    f>>nrAngajati;
+    Angajat* Angajati = new Angajat[nrAngajati];
+    for (int i = 0; i < nrAngajati; i++)
+    {
+        f>>aux;
+        Angajati[i].setNume(aux);
+        f>>auxInt;
+        Angajati[i].setSalariu(auxInt);
+        f>>auxBool;
+        Angajati[i].setIsAngajat(auxBool);
+        f>>auxInt;
+        Angajati[i].setNrMasiniReparate(auxInt);
+        nrMasini = auxInt;
+        MasinaAux = new Masina[nrMasini];
+        for (int j = 0; j < nrMasini; j++)
+        {
+            f>>aux;
+            MasinaAux[j].setMarca(aux);
+            f>>aux;
+            MasinaAux[j].setModel(aux);
+            f>>aux;
+            MasinaAux[j].setNrInmatriculare(aux);
+            f>>aux;
+            MasinaAux[j].setCuloare(aux);
+            f>>auxBool;
+            MasinaAux[j].setReparata(auxBool);
+            for (int k = 0; k <= 5; k++)
+                f>>auxVector[k];
+            MasinaAux[j].setProbleme(auxVector);
+            f>>auxInt;
+            MasinaAux[j].setManopera(auxInt);
+            f>>auxInt;
+            MasinaAux[j].setAnFabricatie(auxInt);
+            f>>auxInt;
+            MasinaAux[j].setCaiPutere(auxInt);
+        }
+        Angajati[i].setMasiniReparate(MasinaAux);
+    }
+    f.close();
+    return Angajati;
+}
+
 void scriereFisierMasiniReparate(Masina* MasiniReparate, int nrMasiniReparate)
 {
    ofstream g("C:\\Users\\Andrei\\CLionProjects\\Proiect1POO\\MasiniReparateVeriku") ;
@@ -122,19 +171,49 @@ void scriereFisierMasiniService(Masina* MasiniReparate, int nrMasiniReparate)
     g.close();
 }
 
+void scriereFisierAngajati(Angajat* Angajati, int nrAngajati)
+{
+    ofstream g("C:\\Users\\Andrei\\CLionProjects\\Proiect1POO\\Angajati");
+    g<<nrAngajati<<endl;
+    for (int i = 0; i < nrAngajati; i++)
+    {
+        g<<Angajati[i].getNume()<<" ";
+        g<<Angajati[i].getSalariu()<<" ";
+        g<<Angajati[i].isAngajat1()<<" ";
+        g<<Angajati[i].getNrMasiniReparate()<<" ";
+        Masina* aux = Angajati[i].getMasiniReparate();
+        for (int j = 0; j < Angajati[i].getNrMasiniReparate(); j++)
+        {
+            g<<aux[i].getMarca()<<" ";
+            g<<aux[i].getModel()<<" ";
+            g<<aux[i].getNrInmatriculare()<<" ";
+            g<<aux[i].getCuloare()<<" ";
+            g<<aux[i].isReparata()<<" ";
+            g<<aux[i].getProbleme()<<" ";
+            g<<aux[i].getManopera()<<" ";
+            g<<aux[i].getAnFabricatie()<<" ";
+            g<<aux[i].getCaiPutere()<<" ";
+        }
+    }
+    g.close();
+}
+
 int menu()
 {
     system("cls");
-    cout<<"Bine ati venit la Vericu Service! "<<endl;
+    cout<<"Bine ati venit la Veriku Service! "<<endl;
     cout<<"1. Adaugati o masina noua in service"<<endl;
     cout<<"2. Vizualizati masinile aflate momentan in service"<<endl;
     cout<<"3. Vizualizati masinile reparate de service-ul nostru"<<endl;
     cout<<"4. Schimbare status masini"<<endl;
     cout<<"5. Soft arabesc"<<endl;
+    cout<<"6. Adaugare angajat"<<endl;
+    cout<<"7. Concediere angajat"<<endl;
+    cout<<"8. Afisare masini reparate de un angajat"<<endl;
     cout<<"0. Exit"<<endl;
     int optiune;
     cin>>optiune;
-    while (optiune > 5)
+    while (optiune > 8)
     {
         cout<<endl<<"Optiune introdusa inexistenta!"<<endl;
         cin>>optiune;
@@ -143,10 +222,12 @@ int menu()
 }
 
 int main() {
-    int nrMasiniService = 0, nrMasiniReparate = 0;
+    int nrMasiniService = 0, nrMasiniReparate = 0, nrAngajati = 0;
     Masina aux[100];
-    Masina *masiniService;
-    Masina *masiniReparate;
+    Masina *masiniService = citireFisierMasiniService(nrMasiniService);
+    Masina *masiniReparate = citireFisierMasiniReparate(nrMasiniReparate);
+    Angajat *angajati = citireFisierAngajati(nrAngajati);
+    Angajat angajatAux[100];
     int optiune = menu();
     while (optiune != 0)
     {
@@ -159,7 +240,7 @@ int main() {
                     aux[i] = masiniService[i];
                 nrMasiniService++;
                 masiniService = new Masina[nrMasiniService];
-                for (int i = 0; i < nrMasiniService; i++)
+                for (int i = 0; i < nrMasiniService - 1; i++)
                     masiniService[i] = aux[i];
                 cin>>masiniService[nrMasiniService -1];
                 cout<<endl<<"Masina noua a fost adaugata cu succes!";
@@ -187,8 +268,8 @@ int main() {
             {
                 cout<<"Urmatoarele masini au fost reparate de Veriku: "<<endl;
                 for (int i = 0; i < nrMasiniService; i++)
-                    if(masiniService[i].isReparata() == false)
-                        cout<<masiniService[i];
+                    if(masiniReparate[i].isReparata() == false)
+                        cout<<masiniReparate[i];
                 cout<<endl<<"1. Exit submeniu"<<endl<<"0. Exit aplicatie"<<endl;
                 cin>>optiune;
                 cout<<endl;
@@ -239,10 +320,36 @@ int main() {
                 if (optiune == 2)
                     optiune = menu();
                 break;
+            }
+            case 6:
+            {
+                cout<<endl<<"Ati ales optiunea de a adauga un angajat nou"<<endl;
+                Angajat angajatNou;
+                cin>>angajatNou;
+                for (int i = 0; i < nrAngajati; i++)
+                    angajatAux[i] = angajati[i];
+                nrAngajati++;
+                angajati = new Angajat[nrAngajati];
+                for (int i = 0; i < nrAngajati - 1; i++)
+                    angajati[i] = angajatAux[i];
+                cin>>angajati[nrAngajati - 1];
+                cout<<endl<<"Angajatul a fost adaugat cu succes!";
+                cout<<endl<<"1. Adaugati un angajat nou"<<endl<<"2. Exit submeniu"<<endl<<"0. Exit aplicatie"<<endl;
+                cin>>optiune;
+                cout<<endl;
+                if (optiune == 2)
+                    optiune = menu();
+                break;
+            }
+            case 7:
+            {
                 break;
             }
         }
     }
+    scriereFisierMasiniService(masiniService, nrMasiniService);
+    scriereFisierMasiniReparate(masiniReparate, nrMasiniReparate);
+    scriereFisierAngajati(angajati, nrAngajati);
     cout<<endl<<"O zi buna!";
     //int nrMasini;
     //Masina* serviceMasini;

@@ -1,6 +1,9 @@
 //
 // Created by Andrei on 3/14/2022.
 //
+#ifndef Included_Masina_H
+
+#define Included_Masina_H
 #include <iostream>
 using namespace std;
 
@@ -235,3 +238,4 @@ public:
 
     }
 };
+#endif

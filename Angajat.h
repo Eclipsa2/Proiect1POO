@@ -9,6 +9,7 @@ class Angajat{
 private:
     string nume;
     Masina* MasiniReparate;
+    int nrMasiniReparate;
     int salariu;
     bool isAngajat;
 
@@ -18,6 +19,7 @@ public:
         this->nume = nume;
         this->salariu = salariu;
         this->isAngajat = true;
+        this->nrMasiniReparate = 0;
     }
     Angajat()
     {
@@ -25,6 +27,7 @@ public:
         this->salariu = -1;
         this->isAngajat = false;
         this->MasiniReparate = NULL;
+        this->nrMasiniReparate = -1;
     }
     Angajat(Angajat& aux)
     {
@@ -32,6 +35,7 @@ public:
         this->MasiniReparate = aux.MasiniReparate;
         this->salariu = aux.salariu;
         this->isAngajat = aux.isAngajat;
+        this->nrMasiniReparate = aux.nrMasiniReparate;
     }
     friend istream& operator>>(istream& in, Angajat& a)
     {
@@ -40,11 +44,26 @@ public:
         cout<<endl<<"Introduceti salariul noului angajat: ";
         in>>a.salariu;
         a.isAngajat = true;
+        a.nrMasiniReparate = 0;
         return in;
     }
-    friend istream& operator<<(istream& in, Angajat& a)
+    friend ostream& operator<<(ostream& out, Angajat& a)
     {
-        //De modificat aici
+        cout<<"Angajatul "<<a.nume<<" cu salariul "<<a.salariu<<" de lei, a reparat urmatoarele masini: ";
+        for (int i = 0; i < a.nrMasiniReparate; i++)
+        {
+            cout<<a.MasiniReparate[i]<<endl;
+        }
+        return out;
+    }
+    Angajat& operator=(const Angajat& aux)
+    {
+        nume = aux.nume;
+        nrMasiniReparate = aux.nrMasiniReparate;
+        salariu = aux.salariu;
+        isAngajat = aux.isAngajat;
+        MasiniReparate = aux.MasiniReparate;
+        return *this;
     }
     #pragma region Getteri si Setteri
     const string &getNume() const {
@@ -79,6 +98,28 @@ public:
         Angajat::isAngajat = isAngajat;
     }
 
+    int getNrMasiniReparate() const {
+        return nrMasiniReparate;
+    }
+
+    void setNrMasiniReparate(int nrMasiniReparate) {
+        Angajat::nrMasiniReparate = nrMasiniReparate;
+    }
 #pragma endregion
+    ~Angajat()
+    {
+
+    }
+    void adaugaMasinaAngajat(Masina m)
+    {
+        Masina* aux;
+        aux = new Masina[this->nrMasiniReparate];
+        aux = this->MasiniReparate;
+        MasiniReparate = new Masina[this->nrMasiniReparate + 1];
+        for (int i = 0; i < nrMasiniReparate; i++)
+            MasiniReparate[i] = aux[i];
+        MasiniReparate[this->nrMasiniReparate + 1] = m;
+        this->nrMasiniReparate++;
+    }
 };
 
